@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkApplicationWindow" id="main_window">
+    <property name="default-height">400</property>
+    <property name="default-width">600</property>
+    <property name="title">gato</property>
+    <child>
+      <object class="GtkBox">
+        <property name="margin-bottom">24</property>
+        <property name="margin-end">24</property>
+        <property name="margin-start">24</property>
+        <property name="margin-top">24</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="valign">center</property>
+        <property name="vexpand">True</property>
+        <child>
+          <object class="GtkEntry" id="main-form"/>
+        </child>
+        <child>
+          <object class="GtkLabel" id="main_label">
+            <property name="label">gato downloader</property>
+            <style>
+              <class name="title-1"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="main_button">
+            <property name="halign">center</property>
+            <property name="label">print to console all information</property>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
