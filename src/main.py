@@ -2,66 +2,79 @@ import sys
 import gi
 import os
 
+import pip
+
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 # cairo renderer does not switch to dGPU on 15' MBP.
 # this should be a toggle in the app, however
-os.environ["GSK_RENDERER"] = "cairo"
+# os.environ["GSK_RENDERER"] = "cairo"
 
-from gi.repository import Gtk, Gio, Adw
+from gi.repository import Gtk, Gio, Adw, Gdk
 
 
-class GatoApp(Gtk.Application):
+class GatoApp(Adw.Application):
     def __init__(self):
         super().__init__(application_id='com.marceloexc.gato', flags=Gio.ApplicationFlags.FLAGS_NONE)
 
     def do_activate(self):
-        # Load the UI file
         builder = Gtk.Builder()
         builder.add_from_file('text.ui')
 
-        # Get the main window
         window = builder.get_object('main_window')
         window.set_application(self)
 
-        # Ensure we're using the native macOS title bar
+        # Ensure native macOS title bar
         window.set_titlebar(None)
 
-        # Set up the macOS menu bar
+        # Set up macOS menu
         self.setup_menu()
 
-        # Get references to the widgets
-        self.entry = builder.get_object('main-form')
-        self.label = builder.get_object('main_label')
-        self.button = builder.get_object('main_button')
+        # Get references to widgets
+        text_entry = builder.get_object('global_search')  # Assuming this is your text entry
 
-        # Connect the button click event
-        self.button.connect('clicked', self.on_button_clicked)
+        # Create a context menu
+        context_menu = Gio.Menu()
+        context_menu.append("Cut", "app.cut")
+        context_menu.append("Copy", "app.copy")
+        context_menu.append("Paste", "app.paste")
+
+        # Add actions
+        cut_action = Gio.SimpleAction.new("cut", None)
+        cut_action.connect("activate", self.on_cut)
+        self.add_action(cut_action)
+
+        copy_action = Gio.SimpleAction.new("copy", None)
+        copy_action.connect("activate", self.on_copy)
+        self.add_action(copy_action)
+
+        paste_action = Gio.SimpleAction.new("paste", None)
+        paste_action.connect("activate", self.on_paste)
+        self.add_action(paste_action)
+
+        # Connect the context menu to the widget
+        # text_entry.connect("button-press-event", self.on_button_press, context_menu)
 
         window.present()
 
-    def setup_menu(self):
-        # Create a menu bar
-        menu_bar = Gio.Menu()
+    def on_button_press(self, widget, event, context_menu):
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
+            context_menu.popup_at_pointer(event)
+            return True
+        return False
 
-        # Create "App" menu
-        app_menu = Gio.Menu()
-        app_menu.append("About", "app.about")
-        app_menu.append("Quit", "app.quit")
-        menu_bar.append_submenu("App", app_menu)
+    def on_cut(self, action, param):
+        # Implement cut functionality
+        print("Cut")
 
-        # Set the menu bar for the application
-        self.set_menubar(menu_bar)
+    def on_copy(self, action, param):
+        # Implement copy functionality
+        print("Copy")
 
-        # Add actions
-        quit_action = Gio.SimpleAction.new("quit", None)
-        quit_action.connect("activate", self.on_quit)
-        self.add_action(quit_action)
-
-        about_action = Gio.SimpleAction.new("about", None)
-        about_action.connect("activate", self.on_about)
-        self.add_action(about_action)
+    def on_paste(self, action, param):
+        # Implement paste functionality
+        print("Paste")
 
     def on_button_clicked(self, button):
         entry_text = self.entry.get_text()
@@ -83,6 +96,11 @@ class GatoApp(Gtk.Application):
         about_dialog.set_website_label("Visit Website")
         about_dialog.present()
 
+    def setup_menu(self):
+        # Set up your macOS menu here
+        menu = Gio.Menu()
+        # Add menu items...
+        self.set_menubar(menu)
 
 if __name__ == '__main__':
     app = GatoApp()
