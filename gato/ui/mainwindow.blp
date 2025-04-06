@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Adw 1;
+
+template MyWindow : Adw.ApplicationWindow {
+  title: "Example";
+  default-width: 400;
+  default-height: 300;
+
+
+  Gtk.HeaderBar {
+    use-native-controls: true;
+    Gtk.Label {
+      label: "Hello, World!";
+      halign: center;
+    }
+  }
+
+  Gtk.Box {
+    orientation: vertical;
+    spacing: 12;
+    margin-top: 12;
+    margin-bottom: 12;
+    margin-start: 12;
+    margin-end: 12;
+
+    Gtk.Label {
+      label: "Welcome to my app!";
+    }
+
+    Gtk.Button {
+      label: "Click me!";
+      clicked => on_button_clicked();
+    }
+  }
+}

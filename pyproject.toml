@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gato"
+version = "0.0.1"
+dependencies = ["PyGObject"]
+
+[project.optional-dependencies]
+dev = ["PyGOBject-stubs"]
+
+[project.scripts]
+gato = "gato.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
