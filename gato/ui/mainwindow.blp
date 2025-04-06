@@ -1,20 +1,28 @@
 using Gtk 4.0;
 using Adw 1;
 
-template MyWindow : Adw.ApplicationWindow {
-  title: "Example";
+template $MyWindow : ApplicationWindow {
+  title: "gato";
   default-width: 400;
   default-height: 300;
 
 
-  Gtk.HeaderBar {
-    use-native-controls: true;
+  [titlebar]
+  HeaderBar header_bar {
+	/*
+	use-native-controls: true;
+	[start]
+	Button install_button {
+	  label: _("apply");
+	  }
     Gtk.Label {
       label: "Hello, World!";
       halign: center;
     }
+	*/
   }
 
+  
   Gtk.Box {
     orientation: vertical;
     spacing: 12;
@@ -23,13 +31,32 @@ template MyWindow : Adw.ApplicationWindow {
     margin-start: 12;
     margin-end: 12;
 
-    Gtk.Label {
-      label: "Welcome to my app!";
+	Gtk.Label label {
+      label: "gallery downloader";
     }
 
+	Gtk.Entry entry {
+	  placeholder-text: 'Type something.';
+	}
+
     Gtk.Button {
-      label: "Click me!";
+      label: "Start";
       clicked => on_button_clicked();
     }
+
+	Gtk.Button {
+	  label: "Start downloading gallery-dl";
+	  clicked => get_gallery_dl();
+	}
+
+	Gtk.Button {
+	  label: "Remove gallery-dl";
+	  clicked => remove_gallery_dl();
+	}
+
+	Gtk.Button {
+	  label: "Try importing";
+	  clicked => try_importing();
+	}
   }
 }

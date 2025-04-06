@@ -6,20 +6,12 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
 -->
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <template class="MyWindow" parent="AdwApplicationWindow">
-    <property name="title">Example</property>
+  <template class="MyWindow" parent="GtkApplicationWindow">
+    <property name="title">gato</property>
     <property name="default-width">400</property>
     <property name="default-height">300</property>
-    <child>
-      <object class="GtkHeaderBar">
-        <property name="use-native-controls">true</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="label">Hello, World!</property>
-            <property name="halign">3</property>
-          </object>
-        </child>
-      </object>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header_bar"></object>
     </child>
     <child>
       <object class="GtkBox">
@@ -30,14 +22,37 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         <property name="margin-start">12</property>
         <property name="margin-end">12</property>
         <child>
-          <object class="GtkLabel">
-            <property name="label">Welcome to my app!</property>
+          <object class="GtkLabel" id="label">
+            <property name="label">gallery downloader</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry">
+            <property name="placeholder-text">Type something.</property>
           </object>
         </child>
         <child>
           <object class="GtkButton">
-            <property name="label">Click me!</property>
+            <property name="label">Start</property>
             <signal name="clicked" handler="on_button_clicked"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label">Start downloading gallery-dl</property>
+            <signal name="clicked" handler="get_gallery_dl"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label">Remove gallery-dl</property>
+            <signal name="clicked" handler="remove_gallery_dl"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label">Try importing</property>
+            <signal name="clicked" handler="try_importing"/>
           </object>
         </child>
       </object>

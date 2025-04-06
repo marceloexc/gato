@@ -1,9 +1,8 @@
 import sys
-import gato.main
+import os
 
-def main():
-    gato.main()
-
+from .main import main
 
 if __name__ == "__main__":
+     # Set working directory to the script location
     main()
