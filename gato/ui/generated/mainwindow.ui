@@ -11,7 +11,15 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
     <property name="default-width">400</property>
     <property name="default-height">300</property>
     <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar"></object>
+      <object class="GtkHeaderBar" id="header_bar">
+        <property name="use-native-controls">true</property>
+        <child type="start">
+          <object class="GtkLabel">
+            <property name="label">Hello, World!</property>
+            <property name="halign">3</property>
+          </object>
+        </child>
+      </object>
     </child>
     <child>
       <object class="GtkBox">

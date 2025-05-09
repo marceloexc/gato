@@ -4,6 +4,8 @@ import pip
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
+os.environ["GSK_RENDERER"] = "cairo"
+
 from gi.repository import Gtk, Adw, Gio
 
 Adw.init()
